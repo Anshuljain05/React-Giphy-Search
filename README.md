@@ -1,4 +1,3 @@
-Hosted Link: https://bejewelled-pixie-9c7ade.netlify.app/
 
 # Getting Started with Create React App
 
