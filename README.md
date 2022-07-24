@@ -1,4 +1,4 @@
-Hosted Link: https://frolicking-rugelach-9a31c6.netlify.app/
+Hosted Link: https://starlit-mochi-a51656.netlify.app/
 
 # Getting Started with Create React App
 
