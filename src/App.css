@@ -17,3 +17,7 @@ body {
 .Loader {
   color: blue;
 }
+
+.nav {
+  margin: 25px;
+}

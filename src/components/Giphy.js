@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Loader from './Loader';
+import Paginate from './Paginate';
 
 
 function Giphy() {
@@ -8,6 +9,20 @@ function Giphy() {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
+    const indexOfLastItem = currentPage*itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    // page 1 item 1 - item 3
+    // page 2 item 4 - item 6
+    // page 3 item 7 - item 9
+    // page 4 item 10 - item 12
+    // page 5 item 13 - item 15
+     
+
     useEffect(() => {
         const fetchData = async () => {
             setIsError(false);
@@ -16,7 +31,8 @@ function Giphy() {
             try {
                 const results = await axios("https://api.giphy.com/v1/gifs/trending", {
                     params: {
-                        api_key: "GlVGYHkr3WSBnllca54iNt0yFbjz7L65"
+                        api_key: "GlVGYHkr3WSBnllca54iNt0yFbjz7L65",
+                        limit: 15
                 }
             });
 
@@ -36,7 +52,7 @@ function Giphy() {
         if (isLoading) {
             return <Loader/>
         }
-        return data.map(ele => {
+        return currentItems.map(ele => {
             return (
                 <div key={ele.id} className='gif'>
                     <img src={ele.images.fixed_height.url} alt=""></img>
@@ -68,7 +84,8 @@ function Giphy() {
             const results = await axios("https://api.giphy.com/v1/gifs/search", {
                 params: {
                     api_key: "GlVGYHkr3WSBnllca54iNt0yFbjz7L65",
-                    q: search
+                    q: search,
+                    limit: 15
                 }
             });
 
@@ -80,6 +97,10 @@ function Giphy() {
         
         setIsLoading(false);
     };
+
+    const pageSelected = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
     return (
         <div className='m-2'>
             {renderError()}
@@ -90,6 +111,12 @@ function Giphy() {
             <div className='container gifs'>
                 {renderGifs()}
             </div>
+            <Paginate 
+                pageSelected={pageSelected}
+                currentPage={currentPage} 
+                itemsPerPage={itemsPerPage} 
+                totalItems={data.length} 
+            />
         </div>
     )
 }
