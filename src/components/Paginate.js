@@ -11,13 +11,13 @@ function Paginate(props) {
         <nav>
             <ul className='pagination pagination-sm justify-content-center border-0 nav'>
                 {pageNumbers.map(number => {
-                    let classes = "page-item ";
+                    let classes = "paginate page-item ";
                     if (number === props.currentPage) {
                         classes += "active"
                     }
                     return (
                         <li className={classes}>
-                            <a onClick={() => props.pageSelected(number)} href='!#' className='page-link'>{number}</a>
+                            <div onClick={() => props.pageSelected(number)} className='page-link'>{number}</div>
                         </li>
                     )
                 })}
